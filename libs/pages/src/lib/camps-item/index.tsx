@@ -20,17 +20,21 @@ export function CampsItemPage() {
 
   return (
     <>
-      <Header>{camp === null ? <Skeleton /> : camp.name}</Header>
+      <Header>{!camp ? <Skeleton /> : camp.name}</Header>
       <Typography variant="h5">
-        {camp === null ? <Skeleton /> : camp.location_name}
+        {!camp ? <Skeleton /> : camp.location_name}
       </Typography>
-      <Typography variant="body1">
-        {camp === null
-          ? Array(4)
-              .fill(null)
-              .map((_, index) => <Skeleton key={index} />)
-          : renderCampEvents()}
+      <Typography
+        variant="body1"
+        sx={{ paddingBottom: (theme) => theme.spacing(3) }}
+      >
+        {!camp ? <Skeleton /> : camp.description}
       </Typography>
+      {!camp
+        ? Array(4)
+            .fill(null)
+            .map((_, index) => <Skeleton key={index} />)
+        : renderCampEvents()}
     </>
   );
 }
