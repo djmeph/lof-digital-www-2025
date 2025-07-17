@@ -345,7 +345,7 @@ export const ART = [
     id: 44,
     type: 'grant',
     title: 'Windoors Vista',
-    artist: 'by Victoria Primeau "Raspberry"',
+    artist: 'by Victoria Primeau "Raspberry" and Hoyle',
     description:
       'Explore the tiny worlds hidden behind doors within doors. Like accidentally clicking a pop-up ad, behind every door lies a carefully curated surprise, though thankfully none of them will ask you to update Adobe Flash Player.',
   },
