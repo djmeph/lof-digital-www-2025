@@ -290,7 +290,7 @@ export const ART = [
     id: 37,
     type: 'grant',
     title: 'The Riff Raft',
-    artist: 'by James Walsh',
+    artist: 'by Animal and Reading Maley',
     description:
       'All aboard! The Rift Raft is a fully interactive wooden pirate ship where participants are invited to create an immersive musical seascape in real time. Turning the ship’s wheel, activating the throttle, hoisting the sails, setting switches on control panels, and cranking the winches allow sonic seafarers to captain their journey and navigate this seascape of sound. Play, collaboration, and community meet to create spontaneous adventures. No two journeys are the same, and every crew member is part of the trip. Day or night, rain or shine, the ship is a sonically and aesthetically engaging platform to unleash your imagination, creating pop-up communities out of whimsical shared experiences.',
   },
