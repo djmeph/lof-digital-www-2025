@@ -45,6 +45,12 @@ Thumbs.db
 .next
 out
 
+# next-pwa
+apps/digital-www-pwa/public/sw.js
+apps/digital-www-pwa/public/sw.js.map
+apps/digital-www-pwa/public/workbox-*.js
+apps/digital-www-pwa/public/workbox-*.js.map
+
 # Yarn
 .yarn/*
 !.yarn/releases
