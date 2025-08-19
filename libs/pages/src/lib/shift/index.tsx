@@ -35,7 +35,9 @@ export function ShiftPage() {
     <>
       <Header>{'Volunteer Shifts'}</Header>
       <Button
-        href={`/api/login?${queryParams.toString()}`}
+        href={`${
+          process.env.NEXT_PUBLIC_API_BASE_URL
+        }/api/login?${queryParams.toString()}`}
         onClick={authContext.enableBackdrop}
         sx={{
           margin: 2,

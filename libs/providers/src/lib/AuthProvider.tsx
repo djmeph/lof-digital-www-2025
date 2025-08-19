@@ -35,7 +35,23 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const checkAuth = useCallback(() => {
     async function fetchAuth() {
       setChecking(true);
-      const res = await fetch('/api/auth', { cache: 'no-store' });
+      const token = cookies.get('token');
+      if (!token) {
+        setIsAuthenticated(false);
+        setJwtPayload(null);
+        setChecking(false);
+        return;
+      }
+
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/auth`,
+        {
+          cache: 'no-store',
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       setChecking(false);
       if (res.ok) {
         const data = await res.json();
