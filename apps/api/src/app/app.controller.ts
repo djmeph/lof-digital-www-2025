@@ -1,7 +1,6 @@
 import {
   Controller,
   Get,
-  Headers,
   Query,
   Redirect,
   Req,
@@ -20,6 +19,7 @@ export class AppController {
   vpateBaseUrl: string;
   appBaseUrl: string;
   apiBaseUrl: string;
+  cookieDomain?: string;
 
   constructor(
     private readonly configService: ConfigService,
@@ -28,6 +28,7 @@ export class AppController {
     this.vpateBaseUrl = this.configService.get('VPATE_BASE_URL');
     this.appBaseUrl = this.configService.get('BASE_URL');
     this.apiBaseUrl = this.configService.get('NEXT_PUBLIC_API_BASE_URL');
+    this.cookieDomain = this.configService.get('COOKIE_DOMAIN');
     if (!this.vpateBaseUrl || !this.appBaseUrl || !this.apiBaseUrl) {
       throw Error(
         'VPATE_BASE_URL, BASE_URL or NEXT_PUBLIC_API_BASE_URL missing'
@@ -45,8 +46,7 @@ export class AppController {
   async login(
     @Req() req: Request,
     @Res() res: Response,
-    @Query('redirect_target') redirectTarget?: string,
-    @Headers('referer') referer?: string
+    @Query('redirect_target') redirectTarget?: string
   ): Promise<{ url: string }> {
     if (redirectTarget) {
       res.cookie('redirect_target', redirectTarget, {
@@ -55,15 +55,6 @@ export class AppController {
       });
     } else {
       res.clearCookie('redirect_target');
-    }
-
-    if (referer) {
-      const referUri = referer.replace(/^https?:\/\/(.*?)\//, '$1');
-      const [domain] = referUri.split(':');
-      res.cookie('cookie_domain', domain, {
-        path: '/',
-        secure: true,
-      });
     }
 
     const queryParams = new URLSearchParams({
@@ -95,7 +86,7 @@ export class AppController {
 
     res.cookie('token', token, {
       path: `/`,
-      domain: req.cookies.cookie_domain,
+      domain: this.cookieDomain,
       secure: true,
     });
 
