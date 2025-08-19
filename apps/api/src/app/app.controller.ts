@@ -1,6 +1,7 @@
 import {
   Controller,
   Get,
+  Headers,
   Query,
   Redirect,
   Req,
@@ -44,7 +45,8 @@ export class AppController {
   async login(
     @Req() req: Request,
     @Res() res: Response,
-    @Query('redirect_target') redirectTarget?: string
+    @Query('redirect_target') redirectTarget?: string,
+    @Headers('referer') referer?: string
   ): Promise<{ url: string }> {
     if (redirectTarget) {
       res.cookie('redirect_target', redirectTarget, {
@@ -55,15 +57,13 @@ export class AppController {
       res.clearCookie('redirect_target');
     }
 
-    if (req.cookies.token) {
-      try {
-        await this.jwtService.verifyAsync(req.cookies.token);
-        res.clearCookie('redirect_target');
-        return { url: `${this.appBaseUrl}${redirectTarget}` };
-      } catch (err: unknown) {
-        console.error('Token verification failed, deleting token cookie', err);
-        res.clearCookie('redirect_target');
-      }
+    if (referer) {
+      const referUri = referer.replace(/^https?:\/\/(.*?)\//, '$1');
+      const [domain] = referUri.split(':');
+      res.cookie('cookie_domain', domain, {
+        path: '/',
+        secure: true,
+      });
     }
 
     const queryParams = new URLSearchParams({
@@ -95,6 +95,7 @@ export class AppController {
 
     res.cookie('token', token, {
       path: `/`,
+      domain: req.cookies.cookie_domain,
       secure: true,
     });
 
