@@ -26,7 +26,7 @@ export const FeedProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     async function fetchFeed() {
-      const res = await fetch(`https://api.lakesoffire.org/api/feed`);
+      const res = await fetch(`/feed.json`);
       const data = await res.json();
       setFeed(data);
     }
