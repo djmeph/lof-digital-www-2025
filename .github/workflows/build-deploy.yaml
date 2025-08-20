@@ -49,7 +49,7 @@ jobs:
         shell: bash
         run: yarn nx run digital-www-pwa:build:production
         env:
-          NEXT_PUBLIC_API_BASE_URL: https://api.lakesoffire.breakfreeproductions.com
+          NEXT_PUBLIC_API_BASE_URL: https://api.lakesoffire.org
           SERVICE_WORKER_CACHE_ID: ${{ github.sha }}
 
       - name: Build and push
